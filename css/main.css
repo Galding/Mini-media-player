@@ -2,6 +2,15 @@ h1 {
     text-align: center;
 }
 
+body {
+    background-color: gray;
+}
+
 #searchbar {
-    margin: auto;
+    margin-left: auto;
+}
+
+#research {
+    width: 20px;
+    height: 20px;
 }
