@@ -40,6 +40,34 @@ function main(){
         var text = document.createTextNode(item.snippet.title);
         p.setAttribute("id", item.id.videoId);
         p.appendChild(text);
+        var playButton = document.createElement("input");
+        playButton.setAttribute("type", "image");
+        playButton.setAttribute("src", "img/playButton.png");
+        playButton.setAttribute("alt", "play");
+        playButton.setAttribute("id", "button");
+        playButton.setAttribute("onclick", "javascript:play(this)");
+        p.appendChild(playButton);
         div.appendChild(p);
     }
 }
+
+function play(selected){
+    selected.setAttribute("src", "img/pauseButton.png");
+    selected.setAttribute("onclick", "javascript:pause(this)");
+    selected.setAttribute("alt", "pause");
+    var videoId = selected.id;
+}
+
+function pause(selected){
+    selected.setAttribute("src", "img/playButton.png");
+    selected.setAttribute("onclick", "javascript:play(this)");
+    selected.setAttribute("alt", "play");
+}
+/*
+var pauseButton = document.createElement("input");
+        pauseButton.setAttribute("type", "image");
+        pauseButton.setAttribute("src", "img/pauseButton.png");
+        pauseButton.setAttribute("alt", "pause");
+        pauseButton.setAttribute("id", "button");
+        p.appendChild(pauseButton);
+        */
