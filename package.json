@@ -20,5 +20,6 @@
   "homepage": "https://github.com/Galding/Mini-media-player#readme",
   "devDependencies": {
     "electron": "^11.1.0"
-  }
+  },
+  "dependencies": {}
 }
