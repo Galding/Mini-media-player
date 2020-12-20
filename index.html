@@ -5,17 +5,22 @@
     <meta charset="UTF-8">
     <title>Mini media player</title>
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+    
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="test/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
-    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body onload="init()">
     <h1>The Player</h1>
     <form method="POST" id="searchBar">
         <input type="text" id="bar" placeholder="search what you want">
-        <input type="image" src="img/searchButton.png" alt="research" id="research" onclick="javascript:research();">
+        <input type="image" src="img/searchButton.png" alt="research" id="research" onclick="javascript:main();">
     </form>
+    <div id="results">
+
+    </div>
 </body>
 
 </html>
