@@ -8,6 +8,7 @@ function init(){
 }
 
 function research(){
+    
     var request = gapi.client.youtube.search.list({
         part: "snippet",
         type: "video",
