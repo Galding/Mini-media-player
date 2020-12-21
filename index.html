@@ -8,17 +8,21 @@
     
     <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
     <script type="test/javascript" src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script type="text/javascript" src="js/search.js"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
     <h1>The Player</h1>
-    <form method="POST" id="searchBar" onsubmit="return false;">
+    <form method="GET" id="searchBar" onsubmit="return false;">
         <input type="text" id="bar" placeholder="search what you want">
         <input type="image" src="img/searchButton.png" alt="research" id="research" onclick="javascript:main();">
     </form>
     <div id="results">
+
+    </div>
+    <div id="youtube-player">
 
     </div>
 </body>
