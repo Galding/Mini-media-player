@@ -40,7 +40,7 @@ function main() {
         p.appendChild(text);
         var playButton = document.createElement("input");
         playButton.setAttribute("type", "image");
-        playButton.setAttribute("src", "img/playButton.png");
+        playButton.setAttribute("src", "img/plusButton.png");
         playButton.setAttribute("alt", "play");
         playButton.setAttribute("class", "button");
         playButton.setAttribute("id", "pause");
@@ -53,8 +53,8 @@ var player;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player("youtube-player", {
-        height: '0',
-        width: '0',
+        height: '400',
+        width: '300',
         videoId: null,
         playerVars: {
             autoplay: 0,
@@ -66,13 +66,14 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-
-function play(selected) {
+var videoTime = 0;
+/*function play(selected) {
     var allButtons = selected.parentNode.parentNode.childNodes;
     for (let i = 1; i < allButtons.length; i++) {
         var currentButton = allButtons[i].firstElementChild;
         if (currentButton.id == "play") {
             pause(currentButton);
+            videoTime = 0;
         }
     }
     selected.setAttribute("src", "img/pauseButton.png");
@@ -80,35 +81,61 @@ function play(selected) {
     selected.setAttribute("alt", "pause");
     selected.setAttribute("id", "play");
     var theVideoId = selected.parentNode.id;
-    player.src = "https://www.youtube.com/embed/"+ theVideoId + "?autoplay=0&loop=1&enablejsapi=1&widgetid=1";
+    //player.src = "https://www.youtube.com/embed/"+ theVideoId + "?autoplay=1&loop=1&enablejsapi=1&widgetid=1";
     var dom = player.getIframe();
-    dom.src = "https://www.youtube.com/embed/"+ theVideoId + "?autoplay=0&loop=1&enablejsapi=1&widgetid=1";
+    dom.src = "https://www.youtube.com/embed/"+ theVideoId + "?autoplay=1&loop=1&enablejsapi=1&widgetid=1";
     player.setVolume(100);
-    player.playVideo();
-}
+    if(player.getPlayerState() == 1 ||player.getPlayerState() == 3){
+        player.playVideo();
+    } else pause(selected);
+    //player.seekTo(videoTime, false);
+    
+}*/
 
+
+/*
 function pause(selected) {
     selected.setAttribute("src", "img/playButton.png");
     selected.setAttribute("onclick", "javascript:play(this)");
     selected.setAttribute("alt", "play");
     selected.setAttribute("id", "pause");
+    videoTime = player.getCurrentTime();
+    
     player.pauseVideo();
+    
+}*/
+
+function play(selected){
+    var theVideoId = selected.parentNode.id;
+    player.cueVideoById(theVideoId, 0, "small");
+    toggleAudio();
 }
 
 function onPlayerReady(event) {
     event.target.setPlaybackQuality("small");
     event.target.setVolume(100);
-    event.target.playVideo();
+    togglePlayButton(player.getPlayerState() !== 5);
 }
 
 function onPlayerStateChange(event) {
-
+    if (event.data === 0) {
+        togglePlayButton(false); 
+    }
 }
-/*
-var pauseButton = document.createElement("input");
-        pauseButton.setAttribute("type", "image");
-        pauseButton.setAttribute("src", "img/pauseButton.png");
-        pauseButton.setAttribute("alt", "pause");
-        pauseButton.setAttribute("id", "button");
-        p.appendChild(pauseButton);
-        */
+
+
+function toggleAudio(){
+    if(player.getPlayerState() == 1 ||player.getPlayerState() == 3){
+     player.pauseVideo();
+     togglePlayButton(false);
+    }
+    else {
+        player.playVideo();
+        togglePlayButton(true);
+    }
+}
+
+function togglePlayButton(play){
+    document.getElementById("playButton").src = play ? "img/pauseButton.png" : "img/playButton.png";
+}
+

@@ -1,3 +1,4 @@
 node_modules/
 out/
 Mini-media-player-win32-x64/
+package-lock.json
