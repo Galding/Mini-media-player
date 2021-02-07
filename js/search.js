@@ -31,8 +31,10 @@ function research() {
 }
 
 function main() {
-    var results = research();
+    
     var div = document.getElementById("results");
+    if(div.innerHTML != null) div.innerHTML = null;
+    var results = research();
     for (item of results.items) {
         var p = document.createElement("p");
         var text = document.createTextNode(item.snippet.title);
@@ -44,11 +46,12 @@ function main() {
         playButton.setAttribute("alt", "play");
         playButton.setAttribute("class", "button");
         playButton.setAttribute("id", "pause");
-        playButton.setAttribute("onclick", "javascript:play(this)");
+        playButton.setAttribute("onclick", "javascript:add(this)");
         p.appendChild(playButton);
         div.appendChild(p);
     }
 }
+var cuePlayList = [];
 var player;
 
 function onYouTubeIframeAPIReady() {
@@ -66,7 +69,7 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-var videoTime = 0;
+
 /*function play(selected) {
     var allButtons = selected.parentNode.parentNode.childNodes;
     for (let i = 1; i < allButtons.length; i++) {
@@ -105,10 +108,14 @@ function pause(selected) {
     
 }*/
 
-function play(selected){
+function add(selected){
     var theVideoId = selected.parentNode.id;
-    player.cueVideoById(theVideoId, 0, "small");
-    toggleAudio();
+    var i = 0;
+    while(cuePlayList[i] != null) i++;
+    cuePlayList[i] = theVideoId
+    player.cuePlaylist({ playlist : cuePlayList});
+    console.log(cuePlayList);
+    if(player.getPlayerState() != 1) toggleAudio();
 }
 
 function onPlayerReady(event) {
@@ -122,7 +129,6 @@ function onPlayerStateChange(event) {
         togglePlayButton(false); 
     }
 }
-
 
 function toggleAudio(){
     if(player.getPlayerState() == 1 ||player.getPlayerState() == 3){
@@ -139,3 +145,10 @@ function togglePlayButton(play){
     document.getElementById("playButton").src = play ? "img/pauseButton.png" : "img/playButton.png";
 }
 
+function emptyCue(){
+    if (cuePlayList != []){
+        cuePlayList = [];
+        console.log("cue is now empty");
+    }
+    
+}
