@@ -18,11 +18,11 @@ function research(){
         console.log(results);
     });
 }*/ 
-var key = openFile("file:///"+__dirname + "/TOKEN.txt");
+const dotenv = require('dotenv').config();
 function research() {
     var xhr = new XMLHttpRequest();
     var text = document.getElementById("bar").value;
-    var query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + key +"&q=" + text.replace(/%20/g, "+");
+    var query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + process.env.API_KEY +"&q=" + text.replace(/%20/g, "+");
     xhr.open("GET", query, false);
     xhr.send(null);
     var res = JSON.parse(xhr.responseText);
