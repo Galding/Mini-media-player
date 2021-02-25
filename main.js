@@ -7,7 +7,8 @@ function createWindow(){
             nodeIntegration: true,
             devTools: true,
             javascript: true,
-            images: true
+            images: true,
+            icon: __dirname + "/img/AppIcon.png"
         }
     });
     win.loadFile("index.html")
