@@ -1,28 +1,9 @@
-/*function init(){
-    gapi.client.setApiKey("AIzaSyA4doBzIwbcqZLK8y54cB9mjV8gPafDiXQ");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { console.log("GAPI client loaded for API"); },
-              function(err) { console.error("Error loading GAPI client for API", err); });
-}
 
-function research(){
-    var text = document.getElementById("bar").value;
-    return gapi.client.youtube.search.list({
-        part: "snippet",
-        type: "video",
-        q: text.replace(/%20/g, "+"),
-        maxResults: 10,
-        order: "viewCount"
-    }).then(function(response){
-        var results = response;
-        console.log(results);
-    });
-}*/ 
-const dotenv = require('dotenv').config();
+var key = openFile("file:///"+ __dirname + "/TOKEN.txt");
 function research() {
     var xhr = new XMLHttpRequest();
     var text = document.getElementById("bar").value;
-    var query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + process.env.API_KEY +"&q=" + text.replace(/%20/g, "+");
+    var query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + key +"&q=" + text.replace(/%20/g, "+");
     xhr.open("GET", query, false);
     xhr.send(null);
     var res = JSON.parse(xhr.responseText);
@@ -59,7 +40,7 @@ function onYouTubeIframeAPIReady() {
         width: '300',
         videoId: null,
         playerVars: {
-            autoplay: 0,
+            autoplay: 1,
             loop: 1
         },
         events: {
@@ -114,7 +95,7 @@ function add(selected){
     cuePlayList[i] = theVideoId
     player.cuePlaylist({ playlist : cuePlayList});
     console.log(cuePlayList);
-    if(player.getPlayerState() != 1) toggleAudio();
+    //if(player.getPlayerState() != 1) toggleAudio();
 }
 
 function onPlayerReady(event) {
