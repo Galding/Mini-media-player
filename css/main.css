@@ -30,3 +30,17 @@ body {
 #youtube-player{
     display: block;
 }
+
+#progress-bar{
+    height: 10px;
+    width: 50%;
+    display: flex;
+    background-color: #333;
+}
+
+#progress-bar div{
+    width: 0;
+    height: 100%;
+    background-color: #5d5bd3;
+    transition-duration: 1s;
+}

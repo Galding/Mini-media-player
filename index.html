@@ -10,6 +10,7 @@
     <script type="test/javascript" src="https://apis.google.com/js/api.js"></script>
     <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
     <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/videoTreatment.js"></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -27,8 +28,13 @@
     </div>
 
     <footer>
-        <input type="image" src="img/playButton.png" id="playButton" onclick="javascript:toggleAudio()" class="controlButtons">
-        <input type="image" src="img/emptyButton.png" id="emptyCue" onclick="javascript:emptyCue()" class="controlButtons">
+        <input type="image" src="img/backButton.png" id="backButton" placeholder="Play previous audio" alt="Play previous audio" onclick="javascript:player.previousVideo()" class="controlButtons">
+        <input type="image" src="img/playButton.png" id="playButton" alt="Play audio" onclick="javascript:toggleAudio()" class="controlButtons">
+        <input type="image" src="img/nextButton1.png" id="nextButton" alt="Play next audio" onclick="javascript:player.nextVideo()" class="controlButtons"> &nbsp;
+        <input type="image" src="img/emptyButton.png" id="emptyCue" alt="Empty the cue" onclick="javascript:emptyCue()" class="controlButtons">
+        <div id="progress-bar">
+           <div></div>
+        </div>
     </footer>
 </body>
 
