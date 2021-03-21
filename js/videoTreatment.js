@@ -1,14 +1,23 @@
 
+var results = null;
 function main() {
     
     var div = document.getElementById("results");
     if(div.innerHTML != null) div.innerHTML = null;
-    var results = research();
+    results = research();
+    console.log(results);
     for (item of results.items) {
         var p = document.createElement("p");
-        var text = document.createTextNode(item.snippet.title);
         p.setAttribute("id", item.id.videoId);
+
+        var thumbnails = document.createElement("img");
+        thumbnails.setAttribute("class", "thumbnails");
+        thumbnails.setAttribute("src", item.snippet.thumbnails.default.url);
+        p.appendChild(thumbnails);
+
+        var text = document.createTextNode(item.snippet.title);
         p.appendChild(text);
+
         var addButton = document.createElement("input");
         addButton.setAttribute("type", "image");
         addButton.setAttribute("src", "img/plusButton.png");
@@ -28,8 +37,8 @@ var currentVideoTime = 0;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player("youtube-player", {
-        height: '400',
-        width: '300',
+        height: '0',
+        width: '0',
         videoId: null,
         playerVars: {
             autoplay: 1,
@@ -109,7 +118,12 @@ function emptyCue(){
         cueListIndex = 0;
         currentVideoTime = 0;
         console.log("cue is now empty");
-        toggleaddButton(false);
+        cueList.push(getCurrentVideoPlayed());
     }
-    
+}
+
+function getCurrentVideoPlayed(){
+    var video = player.getVideoUrl();
+    var videoId = video.match(/([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/);
+    return videoId[0];
 }
