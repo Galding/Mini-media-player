@@ -5,10 +5,10 @@ function main() {
     var div = document.getElementById("results");
     if(div.innerHTML != null) div.innerHTML = null;
     results = research();
-    console.log(results);
     for (item of results.items) {
         var p = document.createElement("p");
         p.setAttribute("id", item.id.videoId);
+        p.setAttribute("class", "resultsClass");
 
         var thumbnails = document.createElement("img");
         thumbnails.setAttribute("class", "thumbnails");
@@ -16,7 +16,9 @@ function main() {
         p.appendChild(thumbnails);
 
         var text = document.createTextNode(item.snippet.title);
-        p.appendChild(text);
+        var p2 = document.createElement("p");
+        p2.appendChild(text);
+        p.appendChild(p2);
 
         var addButton = document.createElement("input");
         addButton.setAttribute("type", "image");
@@ -55,7 +57,40 @@ function onYouTubeIframeAPIReady() {
 function add(selected){
     var theVideoId = selected.parentNode.id;
     cueList.push(theVideoId);
-    //if(player.getPlayerState() != 1) toggleAudio();
+    addToDisplay(selected, cueList[cueList.length-1]);
+}
+
+function addToDisplay(selected, videoIndex){
+    console.log(selected.parentNode);
+    var list = document.getElementById("videos");
+    var element = document.createElement("div");
+    var child = selected.parentNode.firstChild.cloneNode(true);
+    child.removeAttribute("class");
+    child.setAttribute("width", "60%");
+    child.setAttribute("height", "30%");
+
+    var titleElement = document.createElement("p");
+    var videoTitle = selected.parentNode.firstChild.nextSibling.cloneNode(true);
+    titleElement.appendChild(videoTitle);
+    titleElement.setAttribute("class", "textSmall");
+
+    var hiddenId = document.createElement("input");
+    hiddenId.setAttribute("type", "hidden");
+    hiddenId.setAttribute("value", selected.parentNode.id);
+
+    element.setAttribute("onclick", "javascript:goToVideo("+ videoIndex +")");
+
+    element.appendChild(child);
+    element.appendChild(titleElement);
+    element.appendChild(hiddenId);
+    list.appendChild(element);
+}
+
+function goToVideo(videoIndex){
+    cueListIndex = videoIndex;
+    currentVideoTime = 0;
+    player.loadPlaylist({ playlist : cueList, index : cueListIndex, startSeconds : currentVideoTime, suggestedQuality : "small"});
+    toggleaddButton(true);
 }
 
 var timeUpdater = null;
@@ -119,6 +154,7 @@ function emptyCue(){
         currentVideoTime = 0;
         console.log("cue is now empty");
         cueList.push(getCurrentVideoPlayed());
+        document.getElementById("videos").innerHTML= null;
     }
 }
 
@@ -127,3 +163,8 @@ function getCurrentVideoPlayed(){
     var videoId = video.match(/([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/);
     return videoId[0];
 }
+addEventListener("keydown", function(event){
+    if(event.key == " "){
+        toggleAudio();
+    }
+});

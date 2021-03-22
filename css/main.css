@@ -1,5 +1,9 @@
+html{
+    overflow: overlay;
+}
+
 h1 {
-    text-align: center;
+   text-align: center;
 }
 
 body {
@@ -7,6 +11,7 @@ body {
     display: flex;
     color: white;
     flex-wrap: wrap;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 #searchBar {
@@ -18,6 +23,9 @@ body {
     height: 20px;
 }
 
+#results {
+    min-height: 1030px;
+}
 .button{
     width: 20px;
     height: 20px;
@@ -72,15 +80,35 @@ footer {
 }
 #list {
     width: 30%;
-    height: 100%;
+    height: 87%;
     text-align: center;
+    position: fixed;
+    right: 0;
+    overflow: scroll;
 }
 
 .thumbnails{
-    width: 60px;
-    height: 40px;
+    width: 20%;
+    height: 10%;
 }
 
-section {
-    min-height: 400px;
+.resultsClass {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.resultsClass > input {
+    margin-top: 2%;
+}
+
+.resultsClass > p {
+    text-align: center;
+}
+
+#videos > div {
+    cursor: pointer;
+}
+.textSmall {
+    font-size: small;
 }
