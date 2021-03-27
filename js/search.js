@@ -1,5 +1,12 @@
+/**
+ * Api Key.
+ */
 var key = openFile("file:///" + __dirname + "/TOKEN.txt");
 
+/**
+ * Execute user's request.
+ * @returns The results of the research.
+ */
 function research() {
     var xhr = new XMLHttpRequest();
     var text = document.getElementById("bar").value;
@@ -11,7 +18,11 @@ function research() {
 }
 
 
-
+/**
+ * Open a file by an AJAX request. 
+ * @param {string} file the path of the file.
+ * @returns the content of the file.
+ */
 function openFile(file) {
     var rawFile = new XMLHttpRequest();
     var text;
