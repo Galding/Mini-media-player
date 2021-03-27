@@ -1,4 +1,5 @@
-const {app, BrowserWindow} = require("electron")
+const {app, BrowserWindow, Menu, nativeTheme, shell} = require("electron")
+
 function createWindow(){
     const win = new BrowserWindow({
         width: 800,
@@ -8,13 +9,13 @@ function createWindow(){
             devTools: true,
             javascript: true,
             images: true,
-            icon: __dirname + "/img/AppIcon.png"
-        }
+            
+        },
+        icon: __dirname + "/img/AppIcon.png"
     });
     win.loadFile("index.html")
-    win.webContents.openDevTools();
 }
-
+nativeTheme.themeSource = "dark"; 
 app.whenReady().then(createWindow)
 app.on("window-all-closed", () =>{
     if(process.platform != 'darwin'){
@@ -28,3 +29,42 @@ app.on("activate", () =>  {
     }
 })
 
+const menuTemplate = [
+    {
+        label: "App",
+        submenu : [
+            { role: "quit"}
+        ]
+    },
+    {
+        label: "Modifier",
+        submenu: [
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+        ]
+    },
+    {
+        label: "Vue",
+        submenu: [
+            { role: "reload"},
+            { role: "toggleDevTools"},
+            { role: "togglefullscreen"}
+        ]
+    },
+    {
+        label: "A propos",
+        submenu: [
+            {
+                label: "GitHub",
+                clic : async () => {
+                    shell.openExternal("https://github.com/Galding/Mini-media-player")
+                }
+            },
+            { label: "App created by Galding"},
+            { label: "Version 1.0"}
+        ]
+    }
+];
+
+Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
