@@ -1,9 +1,9 @@
-html{
+html {
     overflow: overlay;
 }
 
 h1 {
-   text-align: center;
+    text-align: center;
 }
 
 body {
@@ -12,6 +12,15 @@ body {
     color: white;
     flex-wrap: wrap;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#topSide {
+    position: fixed;
+    background-color: rgb(32, 31, 31);
+    width: 80%;
+    top: 0;
+    left: 0;
+    height: 20%;
 }
 
 #searchBar {
@@ -25,8 +34,10 @@ body {
 
 #results {
     min-height: 1030px;
+    margin-top: 20%;
 }
-.button{
+
+.button {
     width: 20px;
     height: 20px;
     margin-left: 2%;
@@ -38,12 +49,12 @@ body {
     height: 60px;
 }
 
-#youtube-player{
+#youtube-player {
     display: block;
 }
 
 footer {
-    
+
     width: 100%;
     position: fixed;
     bottom: 0%;
@@ -56,14 +67,14 @@ footer {
     margin-bottom: 1%;
 }
 
-#progress-bar{
+#progress-bar {
     height: 10px;
     width: 100%;
     display: flex;
     background-color: #333;
 }
 
-#progress-bar div{
+#progress-bar div {
     width: 0;
     height: 100%;
     background-color: #5d5bd3;
@@ -78,6 +89,7 @@ footer {
     width: 70%;
     height: 100%;
 }
+
 #list {
     width: 30%;
     height: 87%;
@@ -87,7 +99,7 @@ footer {
     overflow: scroll;
 }
 
-.thumbnails{
+.thumbnails {
     width: 20%;
     height: 10%;
 }
@@ -98,17 +110,18 @@ footer {
 
 }
 
-.resultsClass > input {
+.resultsClass>input {
     margin-top: 2%;
 }
 
-.resultsClass > p {
+.resultsClass>p {
     text-align: center;
 }
 
-#videos > div {
+#videos>div {
     cursor: pointer;
 }
+
 .textSmall {
     font-size: small;
 }

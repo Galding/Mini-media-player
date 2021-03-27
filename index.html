@@ -15,15 +15,17 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body >
+<body>
     <div id="content">
         <section>
-            <h1>Mini Media Player</h1>
-            <form method="GET" id="searchBar" onsubmit="return false;">
-                <input type="text" id="bar" placeholder="search what you want">
-                <input type="image" src="img/searchButton.png" alt="research" id="research"
-                    onclick="javascript:main();">
-            </form>
+            <header id="topSide">
+                <h1>Mini Media Player</h1>
+                <form method="GET" id="searchBar" onsubmit="return false;">
+                    <input type="text" id="bar" placeholder="search what you want">
+                    <input type="image" src="img/searchButton.png" alt="research" id="research"
+                        onclick="javascript:main();">
+                </form>
+            </header>
             <div id="results">
 
             </div>
@@ -37,7 +39,7 @@
     <aside id="list">
         <h2>Current Play List</h2>
         <div id="videos">
-            
+
         </div>
     </aside>
     <footer>

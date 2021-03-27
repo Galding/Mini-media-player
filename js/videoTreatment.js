@@ -1,9 +1,9 @@
-
 var results = null;
+
 function main() {
-    
+
     var div = document.getElementById("results");
-    if(div.innerHTML != null) div.innerHTML = null;
+    if (div.innerHTML != null) div.innerHTML = null;
     results = research();
     for (item of results.items) {
         var p = document.createElement("p");
@@ -54,13 +54,13 @@ function onYouTubeIframeAPIReady() {
 }
 
 
-function add(selected){
+function add(selected) {
     var theVideoId = selected.parentNode.id;
     cueList.push(theVideoId);
-    addToDisplay(selected, cueList[cueList.length-1]);
+    addToDisplay(selected, cueList.length - 1);
 }
 
-function addToDisplay(selected, videoIndex){
+function addToDisplay(selected, videoIndex) {
     console.log(selected.parentNode);
     var list = document.getElementById("videos");
     var element = document.createElement("div");
@@ -78,93 +78,120 @@ function addToDisplay(selected, videoIndex){
     hiddenId.setAttribute("type", "hidden");
     hiddenId.setAttribute("value", selected.parentNode.id);
 
-    element.setAttribute("onclick", "javascript:goToVideo("+ videoIndex +")");
+    element.setAttribute("onclick", "javascript:goToVideo(" + videoIndex + ")");
 
     element.appendChild(child);
     element.appendChild(titleElement);
     element.appendChild(hiddenId);
     list.appendChild(element);
+
 }
 
-function goToVideo(videoIndex){
+/**
+ * Change the current played video to the gived one.
+ * @param {int} videoIndex the index wanted
+ */
+function goToVideo(videoIndex) {
     cueListIndex = videoIndex;
     currentVideoTime = 0;
-    player.loadPlaylist({ playlist : cueList, index : cueListIndex, startSeconds : currentVideoTime, suggestedQuality : "small"});
-    toggleaddButton(true);
+    //player.loadPlaylist({ playlist : cueList, index : cueListIndex, startSeconds : currentVideoTime, suggestedQuality : "small"});
+    //toggleaddButton(true);
+    toggleAudio();
 }
 
 var timeUpdater = null;
 var bar = null;
 var percent = 0;
+
 function onPlayerReady(event) {
     event.target.setPlaybackQuality("small");
     event.target.setVolume(100);
     toggleaddButton(player.getPlayerState() !== 5);
 
-    function updateTime(){
+    function updateTime() {
         var oldTime = currentVideoTime;
-        if(player && player.getCurrentTime()){
+        if (player && player.getCurrentTime()) {
             currentVideoTime = player.getCurrentTime()
         }
-        if(currentVideoTime !== oldTime){
+        if (currentVideoTime !== oldTime) {
             onProgress(currentVideoTime);
         }
     }
     timeUpdater = setInterval(updateTime, 100);
 }
 
+function onProgress(currentTime) {
+    bar = document.querySelector('#progress-bar div');
+    percent = Math.floor((100 / player.getDuration()) * currentTime);
+    bar.style.width = percent + "%";
+}
+
 function onPlayerStateChange(event) {
     if (event.data === 0) {
-        toggleaddButton(false); 
+        toggleaddButton(false);
     }
 }
 
-function toggleAudio(){
+function toggleAudio() {
 
-    if(cueList.length != 0){
-        if(player.getPlayerState() == 1 ||player.getPlayerState() == 3){
-        player.pauseVideo();
-        cueListIndex = player.getPlaylistIndex();
-        currentVideoTime = player.getCurrentTime();
-        toggleaddButton(false);
-        }
-        else {
-            player.loadPlaylist({ playlist : cueList, index : cueListIndex, startSeconds : currentVideoTime, suggestedQuality : "small"});
+    if (cueList.length != 0) {
+        if (player.getPlayerState() == 1 || player.getPlayerState() == 3) {
+            player.pauseVideo();
+            cueListIndex = player.getPlaylistIndex();
+            currentVideoTime = player.getCurrentTime();
+            toggleaddButton(false);
+        } else {
+            player.loadPlaylist({
+                playlist: cueList,
+                index: cueListIndex,
+                startSeconds: currentVideoTime,
+                suggestedQuality: "small"
+            });
             player.playVideo();
             toggleaddButton(true);
+            
+
         }
+        setCurrentVideoPlayedOnTheDisplay();
     }
 }
 
-function onProgress(currentTime){
-    bar = document.querySelector('#progress-bar div');
-    percent = Math.floor((100/ player.getDuration()) * currentTime);
-    bar.style.width = percent + "%";    
-}
 
-
-function toggleaddButton(play){
+function toggleaddButton(play) {
     document.getElementById("playButton").src = play ? "img/pauseButton.png" : "img/playButton.png";
 }
 
-function emptyCue(){
-    if (cueList != []){
+function setCurrentVideoPlayedOnTheDisplay() {
+    var videoId = cueList[cueListIndex];
+    var videoDivNodes = document.getElementById("videos").childNodes;
+    for (let i = 1; i < videoDivNodes.length; i++) {
+        if (videoId == videoDivNodes[i].lastChild.value) {
+            videoDivNodes[i].style.border = "1px solid yellow";
+        } else {
+            videoDivNodes[i].style.border = "none";
+        }
+    }
+}
+
+function emptyCue() {
+    if (cueList != []) {
         cueList = [];
         cueListIndex = 0;
         currentVideoTime = 0;
         console.log("cue is now empty");
         cueList.push(getCurrentVideoPlayed());
-        document.getElementById("videos").innerHTML= null;
+        document.getElementById("videos").innerHTML = null;
     }
 }
 
-function getCurrentVideoPlayed(){
+function getCurrentVideoPlayed() {
     var video = player.getVideoUrl();
     var videoId = video.match(/([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/);
     return videoId[0];
 }
-addEventListener("keydown", function(event){
-    if(event.key == " "){
+
+addEventListener("keydown", function (event) {
+    if (event.key == " ") {
         toggleAudio();
     }
 });
