@@ -1,7 +1,14 @@
+/**
+ * The user's research results.  
+ * Null by default.
+ */
 var results = null;
 
+/**
+ * The main function to display the results of user's research.  
+ * This function is call when the user make a research.
+ */
 function main() {
-
     var div = document.getElementById("results");
     if (div.innerHTML != null) div.innerHTML = null;
     results = research();
@@ -31,12 +38,30 @@ function main() {
         div.appendChild(p);
     }
 }
+
+/**
+ * User's play list.
+ */
 var cueList = [];
+
+/**
+ * The Youtube player.
+ */
 var player;
+
+/**
+ * The index of the current video in the cueList.
+ */
 var cueListIndex = 0;
+
+/**
+ * The current time elapsed since the video starts.
+ */
 var currentVideoTime = 0;
 
-
+/**
+ * Async function who initialise the Youtube player.
+ */
 function onYouTubeIframeAPIReady() {
     player = new YT.Player("youtube-player", {
         height: '0',
@@ -53,13 +78,23 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-
+/**
+ * Add a video to the cueList.  
+ * This function is call when the users click on the plus button.
+ * @param {*} selected the button the user clicks.
+ */
 function add(selected) {
     var theVideoId = selected.parentNode.id;
     cueList.push(theVideoId);
     addToDisplay(selected, cueList.length - 1);
 }
 
+/**
+ * Display the thumbnail and the title on the side play list.  
+ * This function is called in the the add function.  
+ * @param {*} selected the button the user clicks.
+ * @param {int} videoIndex the index of the video in the cueList. 
+ */
 function addToDisplay(selected, videoIndex) {
     console.log(selected.parentNode);
     var list = document.getElementById("videos");
@@ -89,20 +124,32 @@ function addToDisplay(selected, videoIndex) {
 
 /**
  * Change the current played video to the gived one.
- * @param {int} videoIndex the index wanted
+ * @param {int} videoIndex the index wanted.
  */
 function goToVideo(videoIndex) {
     cueListIndex = videoIndex;
     currentVideoTime = 0;
-    //player.loadPlaylist({ playlist : cueList, index : cueListIndex, startSeconds : currentVideoTime, suggestedQuality : "small"});
-    //toggleaddButton(true);
     toggleAudio();
 }
 
+/**
+ * The id of the timer interval.
+ */
 var timeUpdater = null;
-var bar = null;
-var percent = 0;
 
+/**
+ * The time bar.
+ */
+var bar = null;
+
+/**
+ * The percent of the video time. 
+ */
+var percent = 0;
+/**
+ * Event function : when the Youtube player is ready it calls this function.
+ * @param {*} event 
+ */
 function onPlayerReady(event) {
     event.target.setPlaybackQuality("small");
     event.target.setVolume(100);
@@ -120,18 +167,29 @@ function onPlayerReady(event) {
     timeUpdater = setInterval(updateTime, 100);
 }
 
+/**
+ * Display the progression of the video.
+ * @param {int} currentTime the time elapsed since the video starts.
+ */
 function onProgress(currentTime) {
     bar = document.querySelector('#progress-bar div');
     percent = Math.floor((100 / player.getDuration()) * currentTime);
     bar.style.width = percent + "%";
 }
 
+/**
+ * Event function : when the Youtube player change it calls this function.
+ * @param {*} event 
+ */
 function onPlayerStateChange(event) {
     if (event.data === 0) {
         toggleaddButton(false);
     }
 }
 
+/**
+ * If the player is ready it launchs the audio.
+ */
 function toggleAudio() {
 
     if (cueList.length != 0) {
@@ -156,11 +214,17 @@ function toggleAudio() {
     }
 }
 
-
+/**
+ * Change the icon of the play button : true is play and false is pause.
+ * @param {boolean} play the state of the play button.
+ */
 function toggleaddButton(play) {
     document.getElementById("playButton").src = play ? "img/pauseButton.png" : "img/playButton.png";
 }
 
+/**
+ * Display a border of the current video in the play list on the side.
+ */
 function setCurrentVideoPlayedOnTheDisplay() {
     var videoId = cueList[cueListIndex];
     var videoDivNodes = document.getElementById("videos").childNodes;
@@ -173,23 +237,37 @@ function setCurrentVideoPlayedOnTheDisplay() {
     }
 }
 
+/**
+ * Empty the current play list and the display.
+ */
 function emptyCue() {
     if (cueList != []) {
         cueList = [];
         cueListIndex = 0;
         currentVideoTime = 0;
         console.log("cue is now empty");
-        cueList.push(getCurrentVideoPlayed());
+        if(player.getPlayerState() != 1 ||player.getPlayerState() != 3) cueList.push(getCurrentVideoPlayed());
         document.getElementById("videos").innerHTML = null;
+        toggleaddButton(false);
     }
 }
 
+/**
+ * Allow to get the current video id.
+ * @returns the id of the current video played.
+ */
 function getCurrentVideoPlayed() {
     var video = player.getVideoUrl();
-    var videoId = video.match(/([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/);
-    return videoId[0];
+    if(video.match(/.$/) != "="){
+        var videoId = video.match(/([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/);
+        if(videoId == null) videoId = video.match(/^.*[a-zA-Z]+-[a-zA-Z]+$/);
+        return videoId[0];
+    }else return null;
 }
 
+/**
+ * Toggle the audio when the user press space.
+ */
 addEventListener("keydown", function (event) {
     if (event.key == " ") {
         toggleAudio();
