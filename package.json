@@ -5,7 +5,17 @@
   "description": "A little media player",
   "main": "main.js",
   "build": {
-    "appId": "com.galding.mini_media_player"
+    "compression": "store",
+    "appId": "com.galding.mini_media_player",
+    "win": {
+      "icon": "dist/.icon-ico/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "directories": {
+      "app": "."
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,7 +25,7 @@
     "electron": "electron main",
     "build-win32": "electron-packager . --asar --platform=win32 --arch=x64 --overwrite --executableName Mini-media-player",
     "dist": "electron-builder",
-    "dist-win" : "electron-builder -w"
+    "dist-win": "electron-builder -w"
   },
   "repository": {
     "type": "git",
@@ -29,42 +39,6 @@
   "homepage": "https://github.com/Galding/Mini-media-player#readme",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.54",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^11.1.0"
-  },
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    
-    "electron-squirrel-startup": "^1.0.0"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "Mini_media_player"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ]
-    }
   }
 }

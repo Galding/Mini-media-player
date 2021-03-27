@@ -11,7 +11,6 @@ function createWindow(){
             images: true,
             
         },
-        icon: __dirname + "/img/AppIcon.png"
     });
     win.loadFile("index.html")
 }
