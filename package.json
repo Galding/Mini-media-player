@@ -4,13 +4,18 @@
   "author": "Galding",
   "description": "A little media player",
   "main": "main.js",
+  "build": {
+    "appId": "com.galding.mini_media_player"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron-forge start ",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "electron": "electron main",
-    "build-win32": "electron-packager . --asar --platform=win32 --arch=x64 --overwrite --executableName Mini-media-player"
+    "build-win32": "electron-packager . --asar --platform=win32 --arch=x64 --overwrite --executableName Mini-media-player",
+    "dist": "electron-builder",
+    "dist-win" : "electron-builder -w"
   },
   "repository": {
     "type": "git",
@@ -32,6 +37,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {

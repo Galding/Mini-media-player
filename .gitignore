@@ -6,3 +6,4 @@ TOKEN.txt
 .env
 old*
 img/nextButton2*
+dist/
