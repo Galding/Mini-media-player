@@ -3,17 +3,26 @@
  */
 var key = openFile("file:///" + __dirname + "/TOKEN.txt");
 
+var nextPageToken;
+
 /**
  * Execute user's request.
  * @returns The results of the research.
  */
-function research() {
+function research(pageToken) {
     var xhr = new XMLHttpRequest();
     var text = document.getElementById("bar").value;
-    var query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + key + "&q=" + text.replace(/%20/g, "+");
+    var query;
+    if(pageToken == null){
+        query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&key=" + key + "&q=" + text.replace(/%20/g, "+");
+    } else {
+        query = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&type=video&order=viewCount&pageToken="+ nextPageToken +"&key=" + key + "&q=" + text.replace(/%20/g, "+");
+    }
     xhr.open("GET", query, false);
     xhr.send(null);
     var res = JSON.parse(xhr.responseText);
+    nextPageToken = res.nextPageToken;
+    console.log(nextPageToken);
     return res;
 }
 

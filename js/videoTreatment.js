@@ -11,7 +11,15 @@ var results = null;
 function main() {
     var div = document.getElementById("results");
     if (div.innerHTML != null) div.innerHTML = null;
-    results = research();
+    results = research(nextPageToken);
+    var nextPageButton = document.createElement("input");
+    var divPage = document.getElementById("nextPageButton");
+    if(divPage.innerHTML != null) divPage.innerHTML = null;
+    nextPageButton.setAttribute("type", "button");
+    nextPageButton.setAttribute("value", "Next Page");
+    nextPageButton.setAttribute("onclick", "javascript:main()")
+    divPage.appendChild(nextPageButton);
+
     for (item of results.items) {
         var p = document.createElement("p");
         p.setAttribute("id", item.id.videoId);
@@ -73,9 +81,22 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange,
+            'onError': onError 
         }
     });
+}
+
+function onError(event){
+    var errorType = event.data;
+    switch (errorType) {
+        case 101 || 105:
+            alert("Cet audio ne peut être lu dans un lecteur integré :(");
+            break;
+    
+        default:
+            break;
+    }
 }
 
 /**
