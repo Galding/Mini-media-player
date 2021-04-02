@@ -12,13 +12,7 @@ function main() {
     var div = document.getElementById("results");
     if (div.innerHTML != null) div.innerHTML = null;
     results = research(nextPageToken);
-    var nextPageButton = document.createElement("input");
-    var divPage = document.getElementById("nextPageButton");
-    if(divPage.innerHTML != null) divPage.innerHTML = null;
-    nextPageButton.setAttribute("type", "button");
-    nextPageButton.setAttribute("value", "Next Page");
-    nextPageButton.setAttribute("onclick", "javascript:main()")
-    divPage.appendChild(nextPageButton);
+    
 
     for (item of results.items) {
         var p = document.createElement("p");
@@ -45,6 +39,18 @@ function main() {
         p.appendChild(addButton);
         div.appendChild(p);
     }
+    var nextPageButton = document.createElement("input");
+    var divPage = document.getElementById("nextPageButton");
+    if(divPage.innerHTML != null) divPage.innerHTML = null;
+    nextPageButton.setAttribute("type", "image");
+    nextPageButton.setAttribute("src", "img/nextButton2.png");
+    nextPageButton.setAttribute("id", "nextResultButton");
+    divPage.appendChild(nextPageButton);
+    var p2 = document.createElement("p");
+    var text = document.createTextNode("Next Page");
+    p2.appendChild(text);
+    divPage.appendChild(p2);
+
 }
 
 /**

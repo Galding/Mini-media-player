@@ -5,6 +5,5 @@ package-lock.json
 TOKEN.txt
 .env
 old*
-img/nextButton2*
 dist/
 package.json.txt
