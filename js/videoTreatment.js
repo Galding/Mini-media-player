@@ -300,3 +300,8 @@ addEventListener("keydown", function (event) {
         toggleAudio();
     }
 });
+
+var rangeInput = document.getElementById("volume");
+rangeInput.addEventListener("click", function (e) {
+    player.setVolume(e.target.value);
+});
