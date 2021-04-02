@@ -13,6 +13,9 @@
         "nsis"
       ]
     },
+    "linux": {
+      "icon": "img/icon.ico"
+    },
     "files": [
       "!node_modules/"
     ],
