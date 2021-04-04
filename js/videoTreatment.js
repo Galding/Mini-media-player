@@ -8,12 +8,18 @@ var results = null;
  * The main function to display the results of user's research.  
  * This function is call when the user make a research.
  */
-function main() {
+async function main() {   
+    results = research(nextPageToken);
+    displayResults(results);
+}
+
+/**
+ * Display all of the results on the page
+ * @param {*} results the value returned by research function
+ */
+function displayResults(results){
     var div = document.getElementById("results");
     if (div.innerHTML != null) div.innerHTML = null;
-    results = research(nextPageToken);
-    
-
     for (item of results.items) {
         var p = document.createElement("p");
         p.setAttribute("id", item.id.videoId);
@@ -39,6 +45,7 @@ function main() {
         p.appendChild(addButton);
         div.appendChild(p);
     }
+
     var nextPageButton = document.createElement("input");
     var divPage = document.getElementById("nextPageButton");
     if(divPage.innerHTML != null) divPage.innerHTML = null;
@@ -50,7 +57,6 @@ function main() {
     var text = document.createTextNode("Next Page");
     p2.appendChild(text);
     divPage.appendChild(p2);
-
 }
 
 /**
