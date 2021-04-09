@@ -14,7 +14,12 @@
       ]
     },
     "linux": {
-      "icon": "img/icon.ico"
+      "icon": "img/AppIcon.png",
+      "target": [
+        "snap",
+        "AppImage"
+        ],
+      "category" : "Audio"
     },
     "files": [
       "!node_modules/"
